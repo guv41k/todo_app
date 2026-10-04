@@ -17,6 +17,12 @@ env-cleanup:
 	echo "Данные очищены"; \
 	fi
 
+env-port-forward:
+	@docker compose up -d port-forwarder
+
+env-port-close:
+	@docker compose down port-forwarder
+
 migrate-create:
 	@if [ -z "$(seq)" ]; then \
 		echo "Отсутствует необходимый парметр seq. Пример migrate-create seq=init";\
