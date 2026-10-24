@@ -2,7 +2,10 @@ package users_transport_http
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
+
+	core_logger "github.com/guv41k/todo_app/internal/core/logger"
 )
 
 type CreateUserRequest struct {
@@ -18,8 +21,15 @@ type CreateUserResponse struct {
 }
 
 func (h *UsersHTTPHandler) CreateUser(rw http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	log := core_logger.FromContext(ctx)
+
+	log.Debug("Invoke create user handler")
+
 	var request CreateUserRequest
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
-		
+		fmt.Println("Произошла ошабки...")
 	}
+
+	rw.WriteHeader(http.StatusOK)
 }
