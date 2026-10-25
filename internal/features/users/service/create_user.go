@@ -7,7 +7,7 @@ import (
 	"github.com/guv41k/todo_app/internal/core/domain"
 )
 
-func (s *UsersService) NewUser(ctx context.Context, user domain.User) (domain.User, error) {
+func (s *UsersService) CreateUser(ctx context.Context, user domain.User) (domain.User, error) {
 	if err := user.Validate(); err != nil {
 		return domain.User{}, fmt.Errorf("validate user domain: %w", err)
 	}
