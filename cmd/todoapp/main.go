@@ -6,7 +6,9 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 
+	core_config "github.com/guv41k/todo_app/internal/core/config"
 	core_logger "github.com/guv41k/todo_app/internal/core/logger"
 	core_postgres_pool "github.com/guv41k/todo_app/internal/core/repository/postgres/pool"
 	core_http_middleware "github.com/guv41k/todo_app/internal/core/transport/http/middleware"
@@ -23,6 +25,9 @@ func main() {
 		syscall.SIGINT, syscall.SIGTERM,
 	)
 	defer cancel()
+
+	config := core_config.NewConfigMust()
+	time.Local = config.TimeZone
 
 	logger, err := core_logger.NewLogger(core_logger.NewConfigMust())
 	if err != nil {

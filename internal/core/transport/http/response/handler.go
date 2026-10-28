@@ -34,6 +34,10 @@ func (h *HTTPResponseHandler) JSONResponse(responseBody any, statusCode int) {
 	}
 }
 
+func (h *HTTPResponseHandler) NoContentResponse() {
+	h.rw.WriteHeader(http.StatusNoContent)
+}
+
 func (h *HTTPResponseHandler) ErrorResponse(err error, msg string) {
 	var (
 		statusCode int
@@ -77,11 +81,9 @@ func (h *HTTPResponseHandler) errorResponse(
 	err error,
 	msg string,
 ) {
-	h.rw.WriteHeader(statusCode)
-
-	response := map[string]string{
-		"message": msg,
-		"error":   err.Error(),
+	response := ErrorResponse{
+		Error:   err.Error(),
+		Message: msg,
 	}
 
 	h.JSONResponse(response, statusCode)
