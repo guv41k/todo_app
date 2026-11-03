@@ -14,8 +14,8 @@ func (r *TasksRepository) CreateTask(ctx context.Context, task domain.Task) (dom
 	defer cancel()
 
 	query := `
-	INSERT INTO todoapp.tasks (title, description, completed, created_at, completed_at, author_user_id)
-	VALUES ($1, $2, $3, $4, $5, $6)
+	INSERT INTO todoapp.tasks (title, description, completed, completed_at, author_user_id)
+	VALUES ($1, $2, $3, $4, $5)
 	RETURNING id, version, title, description, completed, created_at, completed_at, author_user_id;
 	`
 
@@ -25,7 +25,6 @@ func (r *TasksRepository) CreateTask(ctx context.Context, task domain.Task) (dom
 		task.Title,
 		task.Description,
 		task.Completed,
-		task.CreatedAt,
 		task.CompletedAt,
 		task.AuthorUserID,
 	)
